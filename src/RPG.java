@@ -1,15 +1,35 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class RPG {
+public class RPG{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
         int passos = 0; // conta quantos passos o jogador deu
-        boolean inimigoPresente = false;
+        boolean inimigoPresente = true;
         int playerVida = 100;
         int playerDano = 15;
+        System.out.print("Digite o nome do seu herói: ");
+        Heroi heroi = new Heroi(scanner.nextLine(), playerVida, playerDano);
+        Item item = new Item("Porcao De forca", "porcao", 20);
+        Guerreiro guerreiro = new Guerreiro(heroi.getNome(), heroi.getVida(), heroi.getDano(), 30);
+        
+
+        System.out.print("Digite sua classe (1-Guerreiro, 2-Mago, 3-Arqueiro): ");
+        int classe = scanner.nextInt();
+        scanner.nextLine(); // consumir a nova linha
+        
+        if(classe == 1) { 
+            heroi = guerreiro;
+            playerVida = guerreiro.setVida();
+            playerDano = guerreiro.setDano();
+            System.out.println("Voce escolheu a classe Guerreiro! Vida aumentada para " + playerVida + " e Dano aumentado para " + playerDano + ".");
+        }
+
+
+
+        System.out.println("Bem-vindo, " + heroi.getNome() + "! Sua aventura começa agora." + "Voce tem " + heroi.getVida() + " de vida e " + heroi.getDano() + " de dano.");
 
         for (int i = 0; i < 10; i++) {
             System.out.print("Digite um movimento (W/A/S/D): ");
@@ -38,26 +58,32 @@ public class RPG {
             // 🎲 SORTE: 20% de chance de algo acontecer
             int chance = random.nextInt(100); // 0 a 99
 
-            if (chance < 20) { // 20% de probabilidade
-                System.out.println("✨ Algo aconteceu! Você encontrou um item raro!");
+            if(chance < 10) {
+                System.out.println( "Voce ganhou uma Porcao de forca: " + item);
+                playerDano += item.getPoder();
+                System.out.println("Seu dano aumentou para: " + playerDano);
+                continue;// pula para a próxima iteração do loop
             }
-
-            // 🎯 Evento especial: acontece somente APÓS 5 passos
-            if (passos >= 5) {
+                        if (passos >= 5) {
                 int chanceEspecial = random.nextInt(100); // 0 a 99
-                if (chanceEspecial < 10) { // 10% de chance
-                    System.out.println("🔥 Um inimigo aparece após muitos passos!");
+                if (chanceEspecial < 25) { // 25% de chance
+                    System.out.println(" 1 Um inimigo aparece após muitos passos!");
                     inimigoPresente = true;
                 }
+                
             }
+
+
+            // 🎯 Evento especial: acontece somente APÓS 5 passos
+
         }
 
         System.out.println("Fim dos movimentos!");
         
-        if (inimigoPresente) {
+        if (inimigoPresente = true) {
             // criar inimigo com valores aleatórios
-            int inimigoVida = 30 + random.nextInt(41); // 30..70
-            int inimigoDano = 5 + random.nextInt(11); // 5..15
+            int inimigoVida = 100 + random.nextInt(41); // 30..70
+            int inimigoDano = 15 + random.nextInt(11); // 5..15
             Inimigo inimigo = new Inimigo("Goblin", inimigoVida, inimigoDano);
 
             System.out.println("Um inimigo apareceu: " + inimigo);
@@ -105,7 +131,6 @@ public class RPG {
                 System.out.println("Sua vida agora: " + playerVida);
             }
         }
-        
         scanner.close();
     }
 }
