@@ -2,20 +2,17 @@ public class Heroi {
     private String nome;
     private int vida;
     private int dano;
-    
+    private int poder;
 
     public Heroi(String nome, int vida, int dano) {
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
+        this.poder = 50;
     }
 
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public int getVida() {
@@ -32,6 +29,14 @@ public class Heroi {
 
     public void setDano(int dano) {
         this.dano = dano;
+    }
+
+    public int getPoder() {
+        return poder;
+    }
+
+    public void setPoder(int poder) {
+        this.poder = poder;
     }
 
     @Override

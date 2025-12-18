@@ -21,6 +21,7 @@ public class Guerreiro extends Heroi {
         return super.toString() + " (Força: " + forca + ")";
     }
 
+    @Override
     public int getVida() {
         return super.getVida();
     }
@@ -28,6 +29,17 @@ public class Guerreiro extends Heroi {
     public int setVida() {
         return super.getVida() + 20;
     }
+        @Override
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+        @Override
+
+    public void setDano(int dano) {
+        this.dano = dano;
+    }
+    @Override
 
     public int getDano() {
         return super.getDano();

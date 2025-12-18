@@ -5,6 +5,7 @@ public class RPG{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+        
 
         int passos = 0; // conta quantos passos o jogador deu
         boolean inimigoPresente = true;
@@ -14,19 +15,37 @@ public class RPG{
         Heroi heroi = new Heroi(scanner.nextLine(), playerVida, playerDano);
         Item item = new Item("Porcao De forca", "porcao", 20);
         Guerreiro guerreiro = new Guerreiro(heroi.getNome(), heroi.getVida(), heroi.getDano(), 30);
-        
+        Mago mago = new Mago(heroi.getNome(), heroi.getVida(), heroi.getDano(), 100);
+        Arqueiro arqueiro = new Arqueiro(heroi.getNome(), heroi.getVida(), heroi.getDano(), 50);
+
 
         System.out.print("Digite sua classe (1-Guerreiro, 2-Mago, 3-Arqueiro): ");
         int classe = scanner.nextInt();
         scanner.nextLine(); // consumir a nova linha
         
-        if(classe == 1) { 
-            heroi = guerreiro;
-            playerVida = guerreiro.setVida();
-            playerDano = guerreiro.setDano();
-            System.out.println("Voce escolheu a classe Guerreiro! Vida aumentada para " + playerVida + " e Dano aumentado para " + playerDano + ".");
+        switch (classe) {
+            case 1 -> {
+                heroi = guerreiro;
+                playerVida = guerreiro.setVida();
+                playerDano = guerreiro.setDano();
+                System.out.println("Voce escolheu a classe Guerreiro! Vida aumentada para " + playerVida + " e Dano aumentado para " + playerDano + ".");
+            }
+            case 2 -> {
+                heroi = mago;
+                playerVida = mago.getVida();
+                playerDano = mago.getDano();
+                int playerMana = mago.getMana();
+                System.out.println("Voce escolheu a classe Mago! Vida reduzida para " + playerVida + ", Dano permanece " + playerDano + " e Mana aumentada para " + playerMana + ".");
+            }
+            case 3 -> { 
+                heroi = arqueiro;
+                playerVida = arqueiro.getVida();
+                playerDano = arqueiro.getDano();
+                int playerAgilidade = arqueiro.getAgilidade();
+                System.out.println("Voce escolheu a classe Arqueiro! Vida permanece " + playerVida + " e Dano aumentado para " + playerDano + ".");
+            }
+            default -> System.out.println("Classe invalida! Voce sera um Arqueiro padrao.");
         }
-
 
 
         System.out.println("Bem-vindo, " + heroi.getNome() + "! Sua aventura começa agora." + "Voce tem " + heroi.getVida() + " de vida e " + heroi.getDano() + " de dano.");
@@ -55,7 +74,7 @@ public class RPG{
 
             passos++; // aumentamos a quantidade de passos
 
-            // 🎲 SORTE: 20% de chance de algo acontecer
+            //  SORTE: 20% de chance de algo acontecer
             int chance = random.nextInt(100); // 0 a 99
 
             if(chance < 10) {
@@ -74,13 +93,15 @@ public class RPG{
             }
 
 
-            // 🎯 Evento especial: acontece somente APÓS 5 passos
+            //  Evento especial: acontece somente APÓS 5 passos
 
         }
 
         System.out.println("Fim dos movimentos!");
-        
-        if (inimigoPresente = true) {
+
+        // Evento de inimigo
+
+        if (inimigoPresente == true) {
             // criar inimigo com valores aleatórios
             int inimigoVida = 100 + random.nextInt(41); // 30..70
             int inimigoDano = 15 + random.nextInt(11); // 5..15
@@ -92,7 +113,7 @@ public class RPG{
 
             if (acao.equalsIgnoreCase("F")) {
                 int fuga = random.nextInt(100);
-                if (fuga < 50) {
+                if (fuga < 30) {
                     System.out.println("Você conseguiu fugir com sucesso!");
                 } else {
                     System.out.println("Falha na fuga! O inimigo aproveita e ataca.");
